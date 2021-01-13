@@ -2,42 +2,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include "../controllers/controllers.h"
-/////////////////////////////////
 
-///////////////////////////////////
-// // Favorite *createNewIngredient(char *favoriteName) {
-// //   Ingredient *temp = (Ingredient*)malloc(sizeof(Ingredient));
-// //   strcpy(temp->name,ingredientName);
-// //   temp->next = temp->prev = NULL;
-// //   return temp;
-// // }
 
-// // void pushHead(char* ingredientName, Ingredient* head, Ingredient* tail) {
-// //   Ingredient *temp = createNewIngredient(ingredientName);
-  
-// //   if(!head) { 
-// //     head = tail = temp; 
-// //   } else { 
-// //     head->prev = temp; 
-// //     temp->next = head; 
-// //     head = temp; 
-// //   }
-// // }
-
-// Favorite* searchFavorite(char* name, Node* head) {
-//   Favorite* curr = head->headFav;
-  
-//   while(curr) {
-//     if(strcmp(curr->name, name) == 0) {
-//       return curr;
-//     }
-//     curr = curr->next;
-//   }
-
-//   return NULL;
-// }
 
 int main() {
+  manualRecipe();
     int choice;
     bool inMenu = false;
     
@@ -64,8 +33,45 @@ int main() {
             break;
         }
         case 3 : {
-          
-
+          bool inKitchen = false;
+          int recipeNum = -1;
+          do {
+            system("clear");
+            inKitchen = true;
+            puts("Kitchen Area");
+            if(recipeNum == -1) 
+            printf("Selected recipe : No Recipe Selected\n");
+            else
+            printf("Selected recipe : %s\n", recipeBook[recipeNum].name);
+            printf("1. Select Recipe\n");
+            printf("2. Ingredients List\n");
+            printf("3. Start Cooking\n");
+            printf("4. Exit Kitchen\n>>");
+            int n;
+            scanf("%d",&n); getchar();
+            switch(n) {
+              case 1 : {
+                recipeNum = selectRecipe();
+                break;
+              }
+              case 2 : {
+                printIngredient();
+                getchar();
+                break;
+              }
+              case 3 : {
+                if(recipeNum == -1) 
+                  puts("No Recipe Selected");
+                else
+                inCooking(recipeNum);
+                break;
+              }
+              case 4 : {
+                inKitchen = false;
+                break;
+              }
+            }
+          }while(inKitchen);
             break;
         }
 

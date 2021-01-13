@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<unistd.h>
 #include "../models/models.h"
 
 Ingredient *createNewIngredient(char *ingredientName) {
@@ -40,6 +41,7 @@ void printIngredient() {
   puts("Ingredient's List\n");
   if(!curr) {
     printf("No Ingredient\n");
+    getchar();
     return;
   } else {
       while(curr) {
@@ -106,4 +108,99 @@ int popMid(char *inName) {
     } 
   }
   return 1;
+}
+
+int getIngredientTotal(int recipeNum) {
+  int i = 1, sum = 0;
+  while(recipeBook[recipeNum].ingredient[i] != '\0') {
+    sum++;
+  }
+  return sum;
+}
+
+void inCooking(int recipeNum) {
+  printf("Recipe Name : %s\n", recipeBook[recipeNum].name);
+  puts("Recipe Ingredients :");
+  int count = 1;
+  for(int i = 1; i < 5 ; i++) {
+    printf("%d . %s\n",count++, recipeBook[recipeNum].ingredient[i]);
+  }
+  puts("---------------------------");
+  count = 1;
+  puts("Instruction : ");
+  for(int i = 0; i < 5; i++) {
+    printf("Step %d : %s\n",count++, recipeBook[recipeNum].instruction[i]);
+  }
+  puts("Start Cooking ? (1/0) (1 -> start | abort <- 0)");
+  int n;
+  scanf("%d",&n); getchar();
+  switch(n) {
+    case 1 : {
+      system("clear");
+      bool cooking = false;
+        do {
+          cooking = true;
+          for(int i = 0 ; i < 5; i++) {
+            printf("Step %d : %s\n", i+1, recipeBook[recipeNum].instruction[i+1]);
+
+            int until = 20 * (i+1);
+            for(int i = 0; i < 101; i++) {
+              if(i == 100)
+                printf("|");
+              else if( i < until)
+                printf("-");
+              else 
+                printf(" ");
+            }
+            printf("%d%\n",until);
+              getchar();
+          }
+          printf("restart? (1/0)\n >>");
+          int n;
+          scanf("%d",&n); getchar();
+          switch (n)
+          {    
+          case 0:
+            cooking = false;
+            break;
+          }
+
+        } while(cooking);
+      break;
+    }
+    default : {
+      return;
+    }
+  }
+}
+
+void manualRecipe() {
+
+    strcpy(recipeBook[1].name,"fried chicken");
+    strcpy(recipeBook[1].description,"delicious(this is description)");
+    strcpy(recipeBook[1].instruction[1],"clean the chicken");
+    strcpy(recipeBook[1].instruction[2],"heat the oil");
+    strcpy(recipeBook[1].instruction[3],"sprinkle with salt");
+    strcpy(recipeBook[1].instruction[4],"put the chicken in the oil");
+    strcpy(recipeBook[1].instruction[5],"drain and ready to serve");
+    strcpy(recipeBook[1].ingredient[1],"Chicken");
+    strcpy(recipeBook[1].ingredient[2],"Oil");
+    strcpy(recipeBook[1].ingredient[3],"Salt");
+    strcpy(recipeBook[1].ingredient[4],"Sauce (optional)");
+    
+    
+      
+}
+
+int selectRecipe() {
+  system("clear");
+  int num = 1;
+  // tinggal tambah agar recipe fleksibel
+    printf("%d. %s\n",num,recipeBook[1].name);
+  
+  int x;
+  printf("Choose : ");
+  scanf("%d",&x); getchar();
+
+  return x;
 }

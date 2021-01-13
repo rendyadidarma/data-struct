@@ -1,10 +1,10 @@
 struct Recipe
 {
-    char name[255];
-    char description[255];
-    char instruction[25][255];
-    char ingredient[255][255];
-};
+     char name[255];
+     char description[255];
+     char instruction[25][255];
+     char ingredient[255][255];
+}recipeBook[255];
 
 struct Ingredient
 {
